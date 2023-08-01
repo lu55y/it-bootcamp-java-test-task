@@ -1,10 +1,10 @@
-package org.bootcamp.test_task_for_java_developer.services.impl;
+package org.bootcamp.impl;
 
-import org.bootcamp.test_task_for_java_developer.dtos.UserRequest;
-import org.bootcamp.test_task_for_java_developer.dtos.UserResponse;
-import org.bootcamp.test_task_for_java_developer.models.User;
-import org.bootcamp.test_task_for_java_developer.repositories.UserRepository;
-import org.bootcamp.test_task_for_java_developer.services.UserService;
+import org.bootcamp.UserService;
+import org.bootcamp.dto.UserRegistrationRequest;
+import org.bootcamp.dto.UserResponse;
+import org.bootcamp.model.User;
+import org.bootcamp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,8 +17,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public boolean createUser(UserRequest userRequest) {
-        User user = userRequestToUser(userRequest);
+    public boolean createUser(UserRegistrationRequest userRequest) {
+        User user = userRegistrationRequestToUser(userRequest);
         return userRepository.save(user).getId() != null;
     }
 
@@ -29,16 +29,18 @@ public class UserServiceImpl implements UserService {
     }
 
     private UserResponse userToUserResponse(User user) {
-        return new UserResponse(
-                user.getLastname(),
-                user.getFirstname(),
-                user.getSurname(),
-                user.getEmail(),
-                user.getRole()
-        );
+        return UserResponse.builder()
+                .fullName(getFullUserName(user))
+                .email(user.getEmail())
+                .role(user.getRole())
+                .build();
     }
 
-    private User userRequestToUser(UserRequest userRequest) {
+    private String getFullUserName(User user) {
+        return user.getLastname() + " " + user.getFirstname() + " " + user.getSurname();
+    }
+
+    private User userRegistrationRequestToUser(UserRegistrationRequest userRequest) {
         User user = new User();
         user.setLastname(userRequest.getLastname());
         user.setFirstname(userRequest.getFirstname());

@@ -1,4 +1,4 @@
-package org.bootcamp.itbootcampjavatesttask;
+package org.bootcamp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
