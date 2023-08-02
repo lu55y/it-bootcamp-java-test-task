@@ -1,5 +1,6 @@
 package org.bootcamp.controller;
 
+import jakarta.validation.Valid;
 import org.bootcamp.UserService;
 import org.bootcamp.dto.UserRegistrationRequest;
 import org.bootcamp.dto.UserResponse;
@@ -25,7 +26,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping(value = "/create",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> createUser(@RequestBody UserRegistrationRequest userRequest){
+    public ResponseEntity<String> createUser(@RequestBody @Valid UserRegistrationRequest userRequest){
         return userService.createUser(userRequest) ? new ResponseEntity<>("User created.", HttpStatus.CREATED)
                 : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }

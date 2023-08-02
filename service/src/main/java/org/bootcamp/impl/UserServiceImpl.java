@@ -1,5 +1,6 @@
 package org.bootcamp.impl;
 
+import lombok.extern.log4j.Log4j2;
 import org.bootcamp.UserService;
 import org.bootcamp.dto.UserRegistrationRequest;
 import org.bootcamp.dto.UserResponse;
@@ -10,6 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.logging.Logger;
+
+@Log4j2
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -47,7 +51,6 @@ public class UserServiceImpl implements UserService {
         user.setSurname(userRequest.getSurname());
         user.setEmail(userRequest.getEmail());
         user.setRole(userRequest.getRole());
-
         return user;
     }
 
